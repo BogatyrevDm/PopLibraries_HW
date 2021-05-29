@@ -3,13 +3,16 @@ package com.example.poplibraries_hw.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.poplibraries_hw.databinding.ActivityMainBinding
+import com.example.poplibraries_hw.mvp.model.CountersModel
 import com.example.poplibraries_hw.mvp.presenter.MainPresenter
 import com.example.poplibraries_hw.mvp.view.MainView
+import moxy.MvpAppCompatActivity
+import moxy.ktx.moxyPresenter
 
-class MainActivity : AppCompatActivity(), MainView {
+class MainActivity : MvpAppCompatActivity(), MainView {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-    val presenter = MainPresenter(this)
+    private val presenter by moxyPresenter { MainPresenter(CountersModel()) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
