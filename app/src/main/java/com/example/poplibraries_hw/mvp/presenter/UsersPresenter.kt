@@ -4,6 +4,7 @@ import com.example.poplibraries_hw.mvp.model.GithubUser
 import com.example.poplibraries_hw.mvp.model.GithubUsersRepo
 import com.example.poplibraries_hw.mvp.view.UserItemView
 import com.example.poplibraries_hw.mvp.view.UsersView
+import com.example.poplibraries_hw.navigation.UserScreen
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 
@@ -24,7 +25,7 @@ class UsersPresenter(val usersRepo: GithubUsersRepo, val router: Router):MvpPres
         viewState.init()
         loadData()
         usersListPresenter.itemClickListener = { itemView ->
-            //TODO: переход на экран пользователя c помощью router.navigateTo
+            router.navigateTo(UserScreen(usersListPresenter.users[itemView.pos].login))
         }
     }
 
