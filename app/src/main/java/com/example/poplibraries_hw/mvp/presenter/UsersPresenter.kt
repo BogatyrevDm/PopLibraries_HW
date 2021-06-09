@@ -7,6 +7,7 @@ import com.example.poplibraries_hw.mvp.view.UsersView
 import com.example.poplibraries_hw.navigation.UserScreen
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 
@@ -36,6 +37,8 @@ class UsersPresenter(
     }
 
     val usersListPresenter = UsersListPresenter()
+    private var disposable = CompositeDisposable()
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
@@ -46,18 +49,23 @@ class UsersPresenter(
     }
 
     fun loadData() {
-        usersRepo.getUsers()
+        val disposable1 = usersRepo.getUsers()
             .observeOn(mainThreadScheduler)
             .subscribe(
                 ::onLoadDataSuccess,
                 ::onLoadDataError
             )
+        disposable.add(disposable1)
     }
 
     private fun onLoadDataError(error: Throwable) {
         println("Error: ${error.message}")
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.dispose()
+    }
     private fun onLoadDataSuccess(users: List<GithubUser>) {
         usersListPresenter.users.clear()
         usersListPresenter.users.addAll(users)
