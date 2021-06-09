@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.poplibraries_hw.databinding.FragmentUsersBinding
-import com.example.poplibraries_hw.mvp.model.GithubUsersRepo
+import com.example.poplibraries_hw.mvp.model.api.ApiHolder
+import com.example.poplibraries_hw.mvp.model.repo.RetrofitGithubUsersRepo
 import com.example.poplibraries_hw.mvp.presenter.UsersPresenter
 import com.example.poplibraries_hw.mvp.view.UsersRVAdapter
 import com.example.poplibraries_hw.mvp.view.UsersView
 import com.example.poplibraries_hw.ui.App
 import com.example.poplibraries_hw.ui.BackButtonListener
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -22,7 +24,8 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
     private var _binding: FragmentUsersBinding? = null
     private val binding get() = _binding!!
     val presenter: UsersPresenter by moxyPresenter { UsersPresenter(
-        GithubUsersRepo(),
+        AndroidSchedulers.mainThread(),
+        RetrofitGithubUsersRepo(ApiHolder.api),
         App.instance.router) }
     var adapter: UsersRVAdapter? = null
 
