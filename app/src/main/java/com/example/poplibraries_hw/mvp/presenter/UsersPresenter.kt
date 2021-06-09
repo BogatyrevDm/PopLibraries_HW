@@ -8,6 +8,7 @@ import com.example.poplibraries_hw.navigation.UserScreen
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.plusAssign
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 
@@ -49,28 +50,29 @@ class UsersPresenter(
     }
 
     fun loadData() {
-        val disposable1 = usersRepo.getUsers()
+        disposable += usersRepo.getUsers()
             .observeOn(mainThreadScheduler)
             .subscribe(
                 ::onLoadDataSuccess,
                 ::onLoadDataError
             )
-        disposable.add(disposable1)
     }
 
     private fun onLoadDataError(error: Throwable) {
         println("Error: ${error.message}")
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        disposable.dispose()
-    }
     private fun onLoadDataSuccess(users: List<GithubUser>) {
         usersListPresenter.users.clear()
         usersListPresenter.users.addAll(users)
         viewState.updateList()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.dispose()
+    }
+
 
     fun backPressed(): Boolean {
         router.exit()

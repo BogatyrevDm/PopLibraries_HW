@@ -2,12 +2,13 @@ package com.example.poplibraries_hw.mvp.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class GithubUser(
-    @Expose val id: String,
-    @Expose val login: String,
-    @Expose val avatarUrl: String?,
-    @Expose val reposUrl: String
+    @SerializedName("id") val id: String,
+    @SerializedName("login") val login: String,
+    @SerializedName("avatar_url") val avatarUrl: String?,
+    @SerializedName("repos_url") val reposUrl: String
 ) : Parcelable
