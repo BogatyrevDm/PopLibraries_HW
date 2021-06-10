@@ -11,4 +11,6 @@ interface UserView : MvpView {
     fun showUser(user: GithubUser)
 
     fun showError(message: String?)
+    fun init()
+    fun updateReposList()
 }

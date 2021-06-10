@@ -4,4 +4,7 @@
     <string name="counter_two">Счетчик 2</string>
     <string name="counter_three">Счетчик 3</string>
     <string name="login_text">Login</string>
+    <string name="id_text">id</string>
+    <string name="repo_text">repo</string>
+    <string name="repos_text">User\'s repos:</string>
 </resources>
