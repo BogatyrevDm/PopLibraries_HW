@@ -24,12 +24,16 @@ class UsersPresenter(
         override fun getCount() = users.size
         override fun bindView(view: UserItemView) {
             Single.just(users[view.pos]).subscribe({
-                onBindViewSuccess(view, it.login)
+                onBindViewSuccess(view, it.login, it.avatarUrl)
             }, ::onBindViewError)
         }
 
-        private fun onBindViewSuccess(view: UserItemView, login: String) {
+        private fun onBindViewSuccess(view: UserItemView, login: String, avatarUrl:String?) {
             view.setLogin(login)
+            avatarUrl?.let {
+                view.loadImage(it)
+            }
+
         }
 
         private fun onBindViewError(error: Throwable) {

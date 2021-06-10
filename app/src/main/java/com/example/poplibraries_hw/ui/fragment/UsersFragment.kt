@@ -12,6 +12,7 @@ import com.example.poplibraries_hw.mvp.view.UsersRVAdapter
 import com.example.poplibraries_hw.mvp.view.UsersView
 import com.example.poplibraries_hw.ui.App
 import com.example.poplibraries_hw.ui.BackButtonListener
+import com.example.poplibraries_hw.ui.image.GlideImageLoader
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -41,7 +42,7 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
     }
     override fun init() {
         binding.rvUsers.layoutManager = LinearLayoutManager(context)
-        adapter = UsersRVAdapter(presenter.usersListPresenter)
+        adapter = UsersRVAdapter(presenter.usersListPresenter, GlideImageLoader())
         binding.rvUsers.adapter = adapter
     }
     override fun updateList() {
