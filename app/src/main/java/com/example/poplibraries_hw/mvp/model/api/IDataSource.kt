@@ -19,4 +19,6 @@ interface IDataSource {
     @GET
     fun getUserRepos(@Url url: String): Single<List<GitHubRepo>>
 
+    @GET("/repos/{login}/{name}")
+    fun getUserRepoByName(@Path("login") login: String, @Path("name") name: String): Single<GitHubRepo>
 }

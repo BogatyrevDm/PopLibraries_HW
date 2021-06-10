@@ -14,6 +14,7 @@ import com.example.poplibraries_hw.mvp.presenter.UserPresenter
 import com.example.poplibraries_hw.mvp.view.ReposRVAdapter
 import com.example.poplibraries_hw.mvp.view.UserView
 import com.example.poplibraries_hw.ui.App
+import com.example.poplibraries_hw.ui.BackButtonListener
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -75,4 +76,5 @@ class UserFragment : MvpAppCompatFragment(), UserView {
     override fun updateReposList() {
         adapter?.notifyDataSetChanged()
     }
+
 }

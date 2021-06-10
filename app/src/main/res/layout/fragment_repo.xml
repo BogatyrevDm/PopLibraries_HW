@@ -5,71 +5,69 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/user_id_text"
+        android:id="@+id/repo_id_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/id_text"
+        android:text="@string/repo_id_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/user_id"
+        android:id="@+id/repo_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="5dp"
         android:paddingLeft="5dp"
-        app:layout_constraintStart_toEndOf="@id/user_id_text"
-        app:layout_constraintTop_toTopOf="@id/user_id_text" />
+        app:layout_constraintStart_toEndOf="@id/repo_id_text"
+        app:layout_constraintTop_toTopOf="@id/repo_id_text" />
 
     <TextView
-        android:id="@+id/user_login_text"
+        android:id="@+id/repo_name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_text"
-        app:layout_constraintStart_toEndOf="@id/user_id"
-        app:layout_constraintTop_toTopOf="@id/user_id" />
+        android:text="@string/repo_name_text"
+        app:layout_constraintStart_toEndOf="@id/repo_id"
+        app:layout_constraintTop_toTopOf="@id/repo_id" />
 
     <TextView
-        android:id="@+id/user_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="5dp"
-        android:paddingLeft="5dp"
-        app:layout_constraintStart_toEndOf="@id/user_login_text"
-        app:layout_constraintTop_toTopOf="@id/user_login_text" />
-
-    <TextView
-        android:id="@+id/user_repo_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/repo_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/user_id" />
-
-    <TextView
-        android:id="@+id/user_repo"
+        android:id="@+id/repo_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="5dp"
         android:paddingLeft="5dp"
-        app:layout_constraintStart_toEndOf="@id/user_repo_text"
-        app:layout_constraintTop_toTopOf="@id/user_repo_text" />
+        app:layout_constraintStart_toEndOf="@id/repo_name_text"
+        app:layout_constraintTop_toTopOf="@id/repo_name_text" />
+
     <TextView
-        android:id="@+id/user_repos_text"
+        android:id="@+id/repo_description_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/repos_text"
+        android:text="@string/repo_description_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/user_repo" />
+        app:layout_constraintTop_toBottomOf="@id/repo_id" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_repos"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/repo_description"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
+        android:paddingStart="5dp"
+        android:paddingLeft="5dp"
+        app:layout_constraintStart_toEndOf="@id/repo_description_text"
+        app:layout_constraintTop_toTopOf="@id/repo_description_text" />
+    <TextView
+        android:id="@+id/forks_count_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/forks_count_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/user_repos_text" />
+        app:layout_constraintTop_toBottomOf="@id/repo_description" />
+    <TextView
+        android:id="@+id/forks_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="5dp"
+        android:paddingLeft="5dp"
+        app:layout_constraintStart_toEndOf="@id/forks_count_text"
+        app:layout_constraintTop_toTopOf="@id/forks_count_text" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

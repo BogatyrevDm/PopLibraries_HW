@@ -6,6 +6,8 @@ import com.example.poplibraries_hw.mvp.model.repo.IGithubUsersRepo
 import com.example.poplibraries_hw.mvp.view.RepoItemView
 import com.example.poplibraries_hw.mvp.view.UserItemView
 import com.example.poplibraries_hw.mvp.view.UserView
+import com.example.poplibraries_hw.navigation.RepoScreen
+import com.example.poplibraries_hw.navigation.UserScreen
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -52,6 +54,9 @@ class UserPresenter(
                 ::onLoadDataSuccess,
                 ::onLoadDataError
             )
+        reposListPresenter.itemClickListener = { itemView ->
+            router.navigateTo(RepoScreen(userLogin,reposListPresenter.repos[itemView.pos].name))
+        }
 
     }
     private fun onLoadDataError(error: Throwable) {
