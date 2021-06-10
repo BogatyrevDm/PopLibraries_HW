@@ -4,10 +4,8 @@ import com.example.poplibraries_hw.mvp.model.GitHubRepo
 import com.example.poplibraries_hw.mvp.model.GithubUser
 import com.example.poplibraries_hw.mvp.model.repo.IGithubUsersRepo
 import com.example.poplibraries_hw.mvp.view.RepoItemView
-import com.example.poplibraries_hw.mvp.view.UserItemView
 import com.example.poplibraries_hw.mvp.view.UserView
 import com.example.poplibraries_hw.navigation.RepoScreen
-import com.example.poplibraries_hw.navigation.UserScreen
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -20,8 +18,7 @@ class UserPresenter(
     val mainThreadScheduler: Scheduler,
     val usersRepo: IGithubUsersRepo,
     val router: Router
-    ):MvpPresenter<UserView>() {
-
+) : MvpPresenter<UserView>() {
 
 
     class ReposListPresenter : IRepoListPresenter {
@@ -42,6 +39,7 @@ class UserPresenter(
 
         }
     }
+
     val reposListPresenter = UserPresenter.ReposListPresenter()
     private var disposable = CompositeDisposable()
     override fun onFirstViewAttach() {
@@ -55,22 +53,26 @@ class UserPresenter(
                 ::onLoadDataError
             )
         reposListPresenter.itemClickListener = { itemView ->
-            router.navigateTo(RepoScreen(userLogin,reposListPresenter.repos[itemView.pos].name))
+            router.navigateTo(RepoScreen(userLogin, reposListPresenter.repos[itemView.pos].name))
         }
 
     }
+
     private fun onLoadDataError(error: Throwable) {
         router.exit()
     }
 
     private fun onLoadDataSuccess(user: GithubUser) {
-        viewState.showUser(user)
+        viewState.showUserId(user.id)
+        viewState.showUserLogin(user.login)
+        viewState.showUserRepoUrl(user.reposUrl)
         disposable += usersRepo
             .getReposByUrl(user.reposUrl)
             .observeOn(mainThreadScheduler)
             .subscribe(
                 ::onLoadReposSuccess,
-                ::onLoadDataError)
+                ::onLoadDataError
+            )
 
     }
 
@@ -79,6 +81,7 @@ class UserPresenter(
         reposListPresenter.repos.addAll(repos)
         viewState.updateReposList()
     }
+
     override fun onDestroy() {
         super.onDestroy()
         disposable.dispose()

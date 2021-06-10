@@ -27,8 +27,9 @@ class RepoFragment : MvpAppCompatFragment(), RepoView {
         arguments?.getString(ARG_USER_LOGIN) ?: ""
     }
     private val presenter by moxyPresenter {
-        RepoPresenter(userLogin,
-                repoUrl, AndroidSchedulers.mainThread(),
+        RepoPresenter(
+            userLogin,
+            repoUrl, AndroidSchedulers.mainThread(),
             RetrofitGithubUsersRepo(ApiHolder.api),
             App.instance.router
         )
@@ -60,13 +61,18 @@ class RepoFragment : MvpAppCompatFragment(), RepoView {
             }
     }
 
-    override fun showRepo(repo: GitHubRepo) {
-        binding.repoId.text = repo.id
-        binding.repoName.text = repo.name
-        binding.repoDescription.text = repo.description
-        binding.forksCount.text = repo.forksCount
+    override fun showRepoId(id: String) {
+        binding.repoId.text = id
     }
-
+    override fun showRepoName(name: String) {
+        binding.repoName.text = name
+    }
+    override fun showRepoDescription(description: String) {
+        binding.repoDescription.text = description
+    }
+    override fun showRepoForksCount(forksCount: String) {
+        binding.forksCount.text = forksCount
+    }
     override fun showError(error: String?) {
         Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
     }

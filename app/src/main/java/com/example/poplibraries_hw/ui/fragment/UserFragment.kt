@@ -14,7 +14,6 @@ import com.example.poplibraries_hw.mvp.presenter.UserPresenter
 import com.example.poplibraries_hw.mvp.view.ReposRVAdapter
 import com.example.poplibraries_hw.mvp.view.UserView
 import com.example.poplibraries_hw.ui.App
-import com.example.poplibraries_hw.ui.BackButtonListener
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -27,9 +26,12 @@ class UserFragment : MvpAppCompatFragment(), UserView {
         arguments?.getString(ARG_USER_LOGIN) ?: ""
     }
     private val presenter by moxyPresenter {
-        UserPresenter(userLogin,AndroidSchedulers.mainThread(),
-        RetrofitGithubUsersRepo(ApiHolder.api),
-        App.instance.router) }
+        UserPresenter(
+            userLogin, AndroidSchedulers.mainThread(),
+            RetrofitGithubUsersRepo(ApiHolder.api),
+            App.instance.router
+        )
+    }
 
     var adapter: ReposRVAdapter? = null
 
@@ -57,12 +59,15 @@ class UserFragment : MvpAppCompatFragment(), UserView {
             }
     }
 
-    override fun showUser(user: GithubUser) {
-        binding.userLogin.text = user.login
-        binding.userId.text = user.id
-        binding.userRepoText.text = user.reposUrl
+    override fun showUserLogin(login: String) {
+        binding.userLogin.text = login
     }
-
+    override fun showUserId(id: String) {
+        binding.userId.text = id
+    }
+    override fun showUserRepoUrl(userRepoUrl: String) {
+        binding.userRepoText.text = userRepoUrl
+    }
     override fun showError(error: String?) {
         Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
     }

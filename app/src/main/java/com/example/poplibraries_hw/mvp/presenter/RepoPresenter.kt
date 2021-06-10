@@ -1,13 +1,9 @@
 package com.example.poplibraries_hw.mvp.presenter
 
 import com.example.poplibraries_hw.mvp.model.GitHubRepo
-import com.example.poplibraries_hw.mvp.model.GithubUser
 import com.example.poplibraries_hw.mvp.model.repo.IGithubUsersRepo
-import com.example.poplibraries_hw.mvp.view.RepoItemView
 import com.example.poplibraries_hw.mvp.view.RepoView
-import com.example.poplibraries_hw.mvp.view.UserView
 import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import moxy.MvpPresenter
@@ -19,17 +15,14 @@ class RepoPresenter(
     val mainThreadScheduler: Scheduler,
     val usersRepo: IGithubUsersRepo,
     val router: Router
-    ):MvpPresenter<RepoView>() {
-
-
-
+) : MvpPresenter<RepoView>() {
 
     private var disposable = CompositeDisposable()
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
         disposable += usersRepo
-            .getUserRepoByName(userLogin,repoUrl)
+            .getUserRepoByName(userLogin, repoUrl)
             .observeOn(mainThreadScheduler)
             .subscribe(
                 ::onLoadDataSuccess,
@@ -37,12 +30,16 @@ class RepoPresenter(
             )
 
     }
+
     private fun onLoadDataError(error: Throwable) {
         router.exit()
     }
 
     private fun onLoadDataSuccess(repo: GitHubRepo) {
-        viewState.showRepo(repo)
+        viewState.showRepoId(repo.id)
+        viewState.showRepoName(repo.name)
+        viewState.showRepoDescription(repo.description)
+        viewState.showRepoForksCount(repo.forksCount)
     }
 
     override fun onDestroy() {
