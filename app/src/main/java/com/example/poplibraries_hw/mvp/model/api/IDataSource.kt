@@ -1,7 +1,7 @@
 package com.example.poplibraries_hw.mvp.model.api
 
-import com.example.poplibraries_hw.mvp.model.GitHubRepo
-import com.example.poplibraries_hw.mvp.model.GithubUser
+import com.example.poplibraries_hw.mvp.model.entity.GitHubRepo
+import com.example.poplibraries_hw.mvp.model.entity.GithubUser
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

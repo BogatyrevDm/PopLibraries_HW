@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.poplibraries_hw.databinding.ItemUserBinding
-import com.example.poplibraries_hw.mvp.model.IImageLoader
+import com.example.poplibraries_hw.mvp.model.image.IImageLoader
 import com.example.poplibraries_hw.mvp.presenter.IUserListPresenter
 
-class UsersRVAdapter(val presenter: IUserListPresenter, val imageLoader:IImageLoader<ImageView>) :
+class UsersRVAdapter(val presenter: IUserListPresenter, val imageLoader: IImageLoader<ImageView>) :
     RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(
@@ -31,8 +31,8 @@ class UsersRVAdapter(val presenter: IUserListPresenter, val imageLoader:IImageLo
             tvLogin.text = text
         }
 
-        override fun loadImage(url: String) {
-            imageLoader.loadInto(url, vb.ivImage)
+        override fun loadImage(url: String, login:String) {
+            imageLoader.loadInto(url,login, vb.ivImage)
         }
 
     }

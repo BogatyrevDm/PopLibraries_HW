@@ -1,22 +1,26 @@
 package com.example.poplibraries_hw.ui.fragment
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.poplibraries_hw.databinding.FragmentRepoBinding
-import com.example.poplibraries_hw.mvp.model.GitHubRepo
 import com.example.poplibraries_hw.mvp.model.api.ApiHolder
-import com.example.poplibraries_hw.mvp.model.repo.RetrofitGithubUsersRepo
+import com.example.poplibraries_hw.mvp.model.cache.RoomUsersReposCache
+import com.example.poplibraries_hw.mvp.model.repo.RetrofitGithubReposRepo
 import com.example.poplibraries_hw.mvp.presenter.RepoPresenter
 import com.example.poplibraries_hw.mvp.view.RepoView
 import com.example.poplibraries_hw.ui.App
+import com.example.poplibraries_hw.ui.network.AndroidNetworkStatus
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class RepoFragment : MvpAppCompatFragment(), RepoView {
     private var _binding: FragmentRepoBinding? = null
     private val binding get() = _binding!!
@@ -30,7 +34,7 @@ class RepoFragment : MvpAppCompatFragment(), RepoView {
         RepoPresenter(
             userLogin,
             repoUrl, AndroidSchedulers.mainThread(),
-            RetrofitGithubUsersRepo(ApiHolder.api),
+            RetrofitGithubReposRepo(ApiHolder.api, AndroidNetworkStatus(requireContext()), RoomUsersReposCache()),
             App.instance.router
         )
     }
