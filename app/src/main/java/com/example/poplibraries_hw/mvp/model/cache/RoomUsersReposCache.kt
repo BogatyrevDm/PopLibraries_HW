@@ -10,7 +10,7 @@ class RoomUsersReposCache : IUsersReposCache {
     private val db = Database.getInstance()
 
     override fun putRepos(login:String, repos: List<GitHubRepo>): Completable {
-        val roomUser = login?.let { db.userDao.findByLogin(it) }
+        val roomUser = login.let { db.userDao.findByLogin(it) }
             ?: throw java.lang.RuntimeException("No such users in database")
         val roomRepos = repos.map {
             RoomGitHubRepo(
@@ -26,7 +26,7 @@ class RoomUsersReposCache : IUsersReposCache {
 
     override fun getRepos(login:String) =
         Single.fromCallable {
-            val roomUser = login?.let { db.userDao.findByLogin(it) }
+            val roomUser = login.let { db.userDao.findByLogin(it) }
                 ?: throw java.lang.RuntimeException("No such users in database")
             db.repoDao.findForUser(roomUser.id)
                 .map { GitHubRepo(it.id, it.name, it.description, it.forksCount) }

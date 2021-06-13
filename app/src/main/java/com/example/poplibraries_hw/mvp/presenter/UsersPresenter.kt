@@ -31,7 +31,7 @@ class UsersPresenter(
         private fun onBindViewSuccess(view: UserItemView, login: String, avatarUrl:String?) {
             view.setLogin(login)
             avatarUrl?.let {
-                view.loadImage(it)
+                view.loadImage(it, login)
             }
 
         }
