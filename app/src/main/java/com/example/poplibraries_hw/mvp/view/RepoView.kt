@@ -1,6 +1,5 @@
 package com.example.poplibraries_hw.mvp.view
 
-import com.example.poplibraries_hw.mvp.model.GitHubRepo
 import moxy.MvpView
 import moxy.viewstate.strategy.SingleStateStrategy
 import moxy.viewstate.strategy.StateStrategyType

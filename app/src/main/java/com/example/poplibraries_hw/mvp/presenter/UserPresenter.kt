@@ -1,8 +1,9 @@
 package com.example.poplibraries_hw.mvp.presenter
 
-import com.example.poplibraries_hw.mvp.model.GitHubRepo
-import com.example.poplibraries_hw.mvp.model.GithubUser
+import com.example.poplibraries_hw.mvp.model.entity.GitHubRepo
+import com.example.poplibraries_hw.mvp.model.entity.GithubUser
 import com.example.poplibraries_hw.mvp.model.repo.IGithubUsersRepo
+import com.example.poplibraries_hw.mvp.model.repo.IGithubUsersReposRepo
 import com.example.poplibraries_hw.mvp.view.RepoItemView
 import com.example.poplibraries_hw.mvp.view.UserView
 import com.example.poplibraries_hw.navigation.RepoScreen
@@ -17,6 +18,7 @@ class UserPresenter(
     private val userLogin: String,
     val mainThreadScheduler: Scheduler,
     val usersRepo: IGithubUsersRepo,
+    val reposRepo: IGithubUsersReposRepo,
     val router: Router
 ) : MvpPresenter<UserView>() {
 
@@ -66,8 +68,8 @@ class UserPresenter(
         viewState.showUserId(user.id)
         viewState.showUserLogin(user.login)
         viewState.showUserRepoUrl(user.reposUrl)
-        disposable += usersRepo
-            .getReposByUrl(user.reposUrl)
+        disposable += reposRepo
+            .getReposByUrl(user.reposUrl,user.login)
             .observeOn(mainThreadScheduler)
             .subscribe(
                 ::onLoadReposSuccess,

@@ -1,4 +1,4 @@
-package com.example.poplibraries_hw.mvp.model
+package com.example.poplibraries_hw.mvp.model.entity
 
 import android.os.Parcelable
 import com.google.gson.annotations.Expose
