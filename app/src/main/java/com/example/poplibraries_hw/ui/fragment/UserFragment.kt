@@ -10,7 +10,8 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.poplibraries_hw.databinding.FragmentUserBinding
 import com.example.poplibraries_hw.mvp.model.api.ApiHolder
-import com.example.poplibraries_hw.mvp.model.entity.room.db.Database
+import com.example.poplibraries_hw.mvp.model.cache.RoomUsersCache
+import com.example.poplibraries_hw.mvp.model.cache.RoomUsersReposCache
 import com.example.poplibraries_hw.mvp.model.repo.RetrofitGithubReposRepo
 import com.example.poplibraries_hw.mvp.model.repo.RetrofitGithubUsersRepo
 import com.example.poplibraries_hw.mvp.presenter.UserPresenter
@@ -33,8 +34,8 @@ class UserFragment : MvpAppCompatFragment(), UserView {
     private val presenter by moxyPresenter {
         UserPresenter(
             userLogin, AndroidSchedulers.mainThread(),
-            RetrofitGithubUsersRepo(ApiHolder.api, AndroidNetworkStatus(requireContext()), Database.getInstance()),
-            RetrofitGithubReposRepo(ApiHolder.api, AndroidNetworkStatus(requireContext()), Database.getInstance()),
+            RetrofitGithubUsersRepo(ApiHolder.api, AndroidNetworkStatus(requireContext()), RoomUsersCache()),
+            RetrofitGithubReposRepo(ApiHolder.api, AndroidNetworkStatus(requireContext()), RoomUsersReposCache()),
             App.instance.router
         )
     }

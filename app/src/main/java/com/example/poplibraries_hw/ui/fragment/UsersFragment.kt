@@ -8,7 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.poplibraries_hw.databinding.FragmentUsersBinding
 import com.example.poplibraries_hw.mvp.model.api.ApiHolder
-import com.example.poplibraries_hw.mvp.model.entity.room.db.Database
+import com.example.poplibraries_hw.mvp.model.cache.RoomUsersCache
 import com.example.poplibraries_hw.mvp.model.repo.RetrofitGithubUsersRepo
 import com.example.poplibraries_hw.mvp.presenter.UsersPresenter
 import com.example.poplibraries_hw.mvp.view.UsersRVAdapter
@@ -32,7 +32,7 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     val presenter: UsersPresenter by moxyPresenter { UsersPresenter(
         AndroidSchedulers.mainThread(),
-        RetrofitGithubUsersRepo(ApiHolder.api, AndroidNetworkStatus(requireContext()), Database.getInstance()),
+        RetrofitGithubUsersRepo(ApiHolder.api, AndroidNetworkStatus(requireContext()), RoomUsersCache()),
         App.instance.router) }
     var adapter: UsersRVAdapter? = null
 

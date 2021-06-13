@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.poplibraries_hw.databinding.FragmentRepoBinding
 import com.example.poplibraries_hw.mvp.model.api.ApiHolder
-import com.example.poplibraries_hw.mvp.model.entity.room.db.Database
+import com.example.poplibraries_hw.mvp.model.cache.RoomUsersReposCache
 import com.example.poplibraries_hw.mvp.model.repo.RetrofitGithubReposRepo
 import com.example.poplibraries_hw.mvp.presenter.RepoPresenter
 import com.example.poplibraries_hw.mvp.view.RepoView
@@ -34,7 +34,7 @@ class RepoFragment : MvpAppCompatFragment(), RepoView {
         RepoPresenter(
             userLogin,
             repoUrl, AndroidSchedulers.mainThread(),
-            RetrofitGithubReposRepo(ApiHolder.api, AndroidNetworkStatus(requireContext()), Database.getInstance()),
+            RetrofitGithubReposRepo(ApiHolder.api, AndroidNetworkStatus(requireContext()), RoomUsersReposCache()),
             App.instance.router
         )
     }

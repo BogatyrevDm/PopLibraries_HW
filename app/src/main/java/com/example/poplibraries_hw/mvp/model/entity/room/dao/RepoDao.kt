@@ -2,7 +2,7 @@ package com.example.poplibraries_hw.mvp.model.entity.room.dao
 
 import androidx.room.*
 import com.example.poplibraries_hw.mvp.model.entity.room.RoomGitHubRepo
-import com.example.poplibraries_hw.mvp.model.entity.room.RoomGitHubUser
+import io.reactivex.rxjava3.core.Completable
 
 @Dao
 interface RepoDao {
@@ -13,7 +13,7 @@ interface RepoDao {
     fun insert(vararg repos: RoomGitHubRepo)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(repos: List<RoomGitHubRepo>)
+    fun insert(repos: List<RoomGitHubRepo>):Completable
 
     @Update
     fun update(repo: RoomGitHubRepo)

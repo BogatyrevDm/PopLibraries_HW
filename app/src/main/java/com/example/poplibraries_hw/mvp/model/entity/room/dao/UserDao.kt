@@ -2,6 +2,7 @@ package com.example.poplibraries_hw.mvp.model.entity.room.dao
 
 import androidx.room.*
 import com.example.poplibraries_hw.mvp.model.entity.room.RoomGitHubUser
+import io.reactivex.rxjava3.core.Completable
 
 @Dao
 interface UserDao {
@@ -12,7 +13,7 @@ interface UserDao {
     fun insert(vararg users: RoomGitHubUser)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(users: List<RoomGitHubUser>)
+    fun insert(users: List<RoomGitHubUser>):Completable
 
     @Update
     fun update(user: RoomGitHubUser)
