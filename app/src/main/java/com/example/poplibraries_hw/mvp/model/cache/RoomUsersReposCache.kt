@@ -6,8 +6,8 @@ import com.example.poplibraries_hw.mvp.model.entity.room.db.Database
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
-class RoomUsersReposCache : IUsersReposCache {
-    private val db = Database.getInstance()
+class RoomUsersReposCache(val db:Database) : IUsersReposCache {
+
 
     override fun putRepos(login:String, repos: List<GitHubRepo>): Completable {
         val roomUser = login.let { db.userDao.findByLogin(it) }
