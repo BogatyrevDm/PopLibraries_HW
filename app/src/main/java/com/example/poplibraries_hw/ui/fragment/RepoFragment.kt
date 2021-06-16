@@ -33,10 +33,9 @@ class RepoFragment : MvpAppCompatFragment(), RepoView {
     private val presenter by moxyPresenter {
         RepoPresenter(
             userLogin,
-            repoUrl, AndroidSchedulers.mainThread(),
-            RetrofitGithubReposRepo(ApiHolder.api, AndroidNetworkStatus(requireContext()), RoomUsersReposCache()),
-            App.instance.router
-        )
+            repoUrl).apply {
+                App.component.inject(this)
+        }
     }
 
     override fun onCreateView(

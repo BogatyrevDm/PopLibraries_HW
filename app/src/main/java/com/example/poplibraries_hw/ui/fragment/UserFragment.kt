@@ -33,11 +33,10 @@ class UserFragment : MvpAppCompatFragment(), UserView {
     }
     private val presenter by moxyPresenter {
         UserPresenter(
-            userLogin, AndroidSchedulers.mainThread(),
-            RetrofitGithubUsersRepo(ApiHolder.api, AndroidNetworkStatus(requireContext()), RoomUsersCache()),
-            RetrofitGithubReposRepo(ApiHolder.api, AndroidNetworkStatus(requireContext()), RoomUsersReposCache()),
-            App.instance.router
-        )
+            userLogin
+        ).apply {
+            App.component.inject(this)
+        }
     }
 
     var adapter: ReposRVAdapter? = null

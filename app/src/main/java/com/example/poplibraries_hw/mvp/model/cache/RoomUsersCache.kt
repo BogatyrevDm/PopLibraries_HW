@@ -6,9 +6,7 @@ import com.example.poplibraries_hw.mvp.model.entity.room.db.Database
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
-class RoomUsersCache : IUsersCache {
-    private val db = Database.getInstance()
-
+class RoomUsersCache(val db: Database) : IUsersCache {
     override fun putUsers(users: List<GithubUser>): Completable {
 
         val roomUsers = users.map { user ->
