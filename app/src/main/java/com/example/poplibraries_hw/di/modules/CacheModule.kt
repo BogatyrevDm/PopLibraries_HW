@@ -1,5 +1,6 @@
 package com.example.poplibraries_hw.di.modules
 
+import android.content.Context
 import androidx.room.Room
 import com.example.poplibraries_hw.mvp.model.cache.IUsersCache
 import com.example.poplibraries_hw.mvp.model.cache.IUsersReposCache
@@ -15,8 +16,8 @@ import javax.inject.Singleton
 class CacheModule {
     @Singleton
     @Provides
-    fun database(app: App): Database =
-        Room.databaseBuilder(app, Database::class.java, Database.DB_NAME)
+    fun database(context: Context): Database =
+        Room.databaseBuilder(context, Database::class.java, Database.DB_NAME)
             .fallbackToDestructiveMigration()
             .build()
 

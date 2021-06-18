@@ -1,5 +1,6 @@
 package com.example.poplibraries_hw.di.modules
 
+import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.poplibraries_hw.mvp.model.api.IDataSource
@@ -39,5 +40,5 @@ class ApiModule {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @Singleton
     @Provides
-    fun networkStatus(app: App): INetworkStatus = AndroidNetworkStatus(app)
+    fun networkStatus(context: Context): INetworkStatus = AndroidNetworkStatus(context)
 }

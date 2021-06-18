@@ -8,35 +8,44 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.poplibraries_hw.R.layout.fragment_user
 import com.example.poplibraries_hw.databinding.FragmentUserBinding
-import com.example.poplibraries_hw.mvp.model.api.ApiHolder
-import com.example.poplibraries_hw.mvp.model.cache.RoomUsersCache
-import com.example.poplibraries_hw.mvp.model.cache.RoomUsersReposCache
-import com.example.poplibraries_hw.mvp.model.repo.RetrofitGithubReposRepo
-import com.example.poplibraries_hw.mvp.model.repo.RetrofitGithubUsersRepo
+import com.example.poplibraries_hw.mvp.model.repo.IGithubUsersRepo
+import com.example.poplibraries_hw.mvp.model.repo.IGithubUsersReposRepo
 import com.example.poplibraries_hw.mvp.presenter.UserPresenter
 import com.example.poplibraries_hw.mvp.view.ReposRVAdapter
 import com.example.poplibraries_hw.mvp.view.UserView
-import com.example.poplibraries_hw.ui.App
-import com.example.poplibraries_hw.ui.network.AndroidNetworkStatus
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import moxy.MvpAppCompatFragment
+import com.example.poplibraries_hw.ui.AbsFragment
+import io.reactivex.rxjava3.core.Scheduler
 import moxy.ktx.moxyPresenter
+import ru.terrakok.cicerone.Router
+import javax.inject.Inject
 
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-class UserFragment : MvpAppCompatFragment(), UserView {
+class UserFragment : AbsFragment(fragment_user), UserView {
     private var _binding: FragmentUserBinding? = null
     private val binding get() = _binding!!
     private val userLogin by lazy {
         arguments?.getString(ARG_USER_LOGIN) ?: ""
     }
+    @Inject
+    lateinit var mainThreadScheduler: Scheduler
+    @Inject
+    lateinit var usersRepo: IGithubUsersRepo
+    @Inject
+    lateinit var reposRepo: IGithubUsersReposRepo
+    @Inject
+    lateinit var router: Router
+
     private val presenter by moxyPresenter {
         UserPresenter(
-            userLogin
-        ).apply {
-            App.component.inject(this)
-        }
+            userLogin,
+            usersRepo,
+            mainThreadScheduler,
+            reposRepo,
+            router
+        )
     }
 
     var adapter: ReposRVAdapter? = null

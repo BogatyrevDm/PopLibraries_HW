@@ -7,21 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.example.poplibraries_hw.R.layout.fragment_user
 import com.example.poplibraries_hw.databinding.FragmentRepoBinding
-import com.example.poplibraries_hw.mvp.model.api.ApiHolder
-import com.example.poplibraries_hw.mvp.model.cache.RoomUsersReposCache
-import com.example.poplibraries_hw.mvp.model.repo.RetrofitGithubReposRepo
+import com.example.poplibraries_hw.mvp.model.repo.IGithubUsersReposRepo
 import com.example.poplibraries_hw.mvp.presenter.RepoPresenter
 import com.example.poplibraries_hw.mvp.view.RepoView
-import com.example.poplibraries_hw.ui.App
-import com.example.poplibraries_hw.ui.network.AndroidNetworkStatus
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import moxy.MvpAppCompatFragment
+import com.example.poplibraries_hw.ui.AbsFragment
+import io.reactivex.rxjava3.core.Scheduler
 import moxy.ktx.moxyPresenter
+import ru.terrakok.cicerone.Router
+import javax.inject.Inject
 
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-class RepoFragment : MvpAppCompatFragment(), RepoView {
+class RepoFragment : AbsFragment(fragment_user), RepoView {
     private var _binding: FragmentRepoBinding? = null
     private val binding get() = _binding!!
     private val repoUrl by lazy {
@@ -30,12 +29,21 @@ class RepoFragment : MvpAppCompatFragment(), RepoView {
     private val userLogin by lazy {
         arguments?.getString(ARG_USER_LOGIN) ?: ""
     }
+
+    @Inject
+    lateinit var mainThreadScheduler: Scheduler
+    @Inject
+    lateinit var reposRepo: IGithubUsersReposRepo
+    @Inject
+    lateinit var router: Router
     private val presenter by moxyPresenter {
         RepoPresenter(
             userLogin,
-            repoUrl).apply {
-                App.component.inject(this)
-        }
+            repoUrl,
+            mainThreadScheduler,
+            reposRepo,
+            router
+        )
     }
 
     override fun onCreateView(
@@ -67,15 +75,19 @@ class RepoFragment : MvpAppCompatFragment(), RepoView {
     override fun showRepoId(id: String) {
         binding.repoId.text = id
     }
+
     override fun showRepoName(name: String) {
         binding.repoName.text = name
     }
+
     override fun showRepoDescription(description: String) {
         binding.repoDescription.text = description
     }
+
     override fun showRepoForksCount(forksCount: String) {
         binding.forksCount.text = forksCount
     }
+
     override fun showError(error: String?) {
         Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
     }

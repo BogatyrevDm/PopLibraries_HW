@@ -8,24 +8,24 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
-import javax.inject.Inject
 
 class RepoPresenter(
     private val userLogin: String,
-    private val repoUrl: String
+    private val repoUrl: String,
+    private val mainThreadScheduler: Scheduler,
+    private val reposRepo: IGithubUsersReposRepo,
+    private val router: Router
+
 ) : MvpPresenter<RepoView>() {
 
     private var disposable = CompositeDisposable()
 
 
-    @Inject lateinit var mainThreadScheduler: Scheduler
-    @Inject lateinit var ReposRepo: IGithubUsersReposRepo
-    @Inject lateinit var router: Router
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
-        disposable += ReposRepo
+        disposable += reposRepo
             .getUserRepoByName(userLogin, repoUrl)
             .observeOn(mainThreadScheduler)
             .subscribe(

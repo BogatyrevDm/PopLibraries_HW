@@ -1,28 +1,43 @@
 package com.example.poplibraries_hw.di
 
+import android.content.Context
 import com.example.poplibraries_hw.di.modules.*
-import com.example.poplibraries_hw.mvp.presenter.MainPresenter
-import com.example.poplibraries_hw.mvp.presenter.RepoPresenter
-import com.example.poplibraries_hw.mvp.presenter.UserPresenter
-import com.example.poplibraries_hw.mvp.presenter.UsersPresenter
-import com.example.poplibraries_hw.ui.activity.MainActivity
+import com.example.poplibraries_hw.ui.App
+import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjectionModule
+import dagger.android.AndroidInjector
+import io.reactivex.rxjava3.core.Scheduler
+import ru.terrakok.cicerone.NavigatorHolder
+import ru.terrakok.cicerone.Router
 import javax.inject.Singleton
 
 @Singleton
 @Component(
     modules = [
+        AndroidInjectionModule::class,
+        MainModule::class,
+        UserUiModule::class,
         ApiModule::class,
-        AppModule::class,
         CacheModule::class,
-        NavigationModule::class,
         RepoModule::class
     ]
 )
-interface AppComponent {
-    fun inject(mainPresenter: MainPresenter)
-    fun inject(mainActivity: MainActivity)
-    fun inject(usersPresenter: UsersPresenter)
-    fun inject(userPresenter: UserPresenter)
-    fun inject(repoPresenter: RepoPresenter)
+interface AppComponent : AndroidInjector<App> {
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun withContext(context: Context): Builder
+
+        @BindsInstance
+        fun withRouter(router: Router): Builder
+
+        @BindsInstance
+        fun withNavigatorHolder(navigatoreHolder: NavigatorHolder): Builder
+
+        @BindsInstance
+        fun withScheduler(scheduler: Scheduler): Builder
+
+        fun build():AppComponent
+    }
 }

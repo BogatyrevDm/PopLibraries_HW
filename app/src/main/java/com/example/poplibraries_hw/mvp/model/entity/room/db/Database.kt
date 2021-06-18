@@ -6,7 +6,7 @@ import com.example.poplibraries_hw.mvp.model.entity.room.RoomGitHubUser
 import com.example.poplibraries_hw.mvp.model.entity.room.dao.RepoDao
 import com.example.poplibraries_hw.mvp.model.entity.room.dao.UserDao
 
-@androidx.room.Database(entities = [RoomGitHubUser::class, RoomGitHubRepo::class], version = 3)
+@androidx.room.Database(entities = [RoomGitHubUser::class, RoomGitHubRepo::class], version = 4)
 abstract class Database : RoomDatabase() {
     abstract val userDao: UserDao
     abstract val repoDao: RepoDao
