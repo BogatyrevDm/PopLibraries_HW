@@ -42,7 +42,8 @@ class RepoFragment : AbsFragment(fragment_user), RepoView {
             repoUrl,
             mainThreadScheduler,
             reposRepo,
-            router
+            router,
+            this
         )
     }
 
